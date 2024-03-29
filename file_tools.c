@@ -32,7 +32,7 @@ void read_file(FILE *fd)
 	char *buf = NULL;
 	size_t l = 0;
 
-	for (line_nmbr = 1; getline(&buffer, &l, fd) != -1; line_nmbr++)
+	for (line_nmbr = 1; getline(&buf, &l, fd) != -1; line_nmbr++)
 	{
 		format = parse_line(buf, line_nmbr, format);
 	}
@@ -57,7 +57,7 @@ int parse_line(char *buffer, int line_number, int format)
 	if (buffer == NULL)
 		err(4);
 
-	opc = strtok(buffer, delim);
+	opc = strtok(buffer, del);
 	if (opc == NULL)
 		return (format);
 	val = strtok(NULL, del);
@@ -143,7 +143,7 @@ void call_fun(op_func func, char *op, char *val, int ln, int format)
 		}
 		if (val == NULL)
 			err(5, ln);
-		for (i = 0; val[j] != '\0'; j++)
+		for (j = 0; val[j] != '\0'; j++)
 		{
 			if (isdigit(val[j]) == 0)
 				err(5, ln);
